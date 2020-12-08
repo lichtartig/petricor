@@ -1,8 +1,5 @@
-pub mod block;
-pub mod cryptography;
-pub mod pub_key;
-pub mod signature;
-pub mod transaction;
+mod block;
+mod transaction;
 
 use block::CryptoBlock;
 use transaction::UnspentTransactionOutput;
