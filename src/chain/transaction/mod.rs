@@ -1,7 +1,9 @@
 mod basic_transaction;
+mod basic_utxo;
 mod pay_to_public_key_hash;
 
 pub use basic_transaction::BasicTransaction;
+pub use basic_utxo::BasicUTXO;
 
 trait UnlockingScript {
     fn execute_script(&self) -> Vec<u8>;
@@ -14,7 +16,7 @@ trait LockingScript {
 }
 
 pub trait UnspentTransactionOutput {
-    fn get_amount(&self) -> f64;
+    fn get_amount(&self) -> f32;
     fn execute_locking_script(&self, input: Vec<u8>) -> bool;
     fn as_bytes(&self) -> Vec<u8>;
 }
