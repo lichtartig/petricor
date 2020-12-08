@@ -1,4 +1,4 @@
-use crate::chain::cryptography::HashFunction;
+use crate::cryptography::HashFunction;
 use crate::chain::transaction::Transaction;
 use super::CryptoBlock;
 use std::marker::PhantomData;
@@ -45,7 +45,7 @@ impl <H: HashFunction, T: Transaction> CryptoBlock for BasicBlock<'_, H, T> {
 }
 
 
-#[cfg(test)]
+/*#[cfg(test)]
 mod tests {
     #[test]
     fn test_inputs_to_bytes() {
@@ -56,4 +56,4 @@ mod tests {
     fn test_verify() {
         // TODO
     }
-}
+}*/

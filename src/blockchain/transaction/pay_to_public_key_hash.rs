@@ -64,7 +64,7 @@ impl UnlockingScript for PayToPublicKeyHashUnlockingScript {
 #[cfg(test)]
 mod tests {
     use crate::cryptography::{ECsecp256k1, GeneratePubKey, HashFunction, MakeSignature, SHA256, VerifySignature};
-    use crate::chain::transaction::pay_to_public_key_hash::{LockingScript, UnlockingScript, PayToPublicKeyHashLockingScript, PayToPublicKeyHashUnlockingScript};
+    use crate::blockchain::transaction::pay_to_public_key_hash::{LockingScript, UnlockingScript, PayToPublicKeyHashLockingScript, PayToPublicKeyHashUnlockingScript};
 
     #[test]
     fn test_locking_script_as_bytes() {
