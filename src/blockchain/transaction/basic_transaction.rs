@@ -8,7 +8,6 @@ pub struct BasicTransaction<U: UnspentTransactionOutput> {
 }
 
 impl <U: UnspentTransactionOutput> Transaction for BasicTransaction<U> {
-    // TODO Note: This only verifies if a signature matches a transaction. It does not verify it this UTXO was actually free. This needs to be handled by the blockchain.
     fn verify(&self) -> bool {
         for (s, u) in &self.signed_input_transactions {
             let unlock = s.execute_script();
