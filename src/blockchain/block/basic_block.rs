@@ -1,26 +1,25 @@
 use crate::cryptography::HashFunction;
-use crate::chain::transaction::Transaction;
+use crate::blockchain::transaction::Transaction;
 use super::CryptoBlock;
-use std::marker::PhantomData;
 
 #[derive(Debug)]
-pub struct BasicBlock<'a, H:HashFunction, T: Transaction> {
+pub struct BasicBlock<H:HashFunction, T: Transaction> {
     transactions: Vec<T>,
-    previous_hash: Vec<u8>,
-    new_hash: Vec<u8>,
-    hash_function: PhantomData<&'a H>,
+    previous_block_hash: Vec<u8>,
+    this_block_hash: Vec<u8>,
+    hash_function: H,
 }
 
-impl <H: HashFunction, T: Transaction> BasicBlock<'_, H, T> {
-    fn new(transactions: Vec<T>, previous_hash: Vec<u8>, hash_function: &H) -> Self {
+impl <H: HashFunction, T: Transaction> BasicBlock<H, T> {
+    fn new(transactions: Vec<T>, previous_hash: Vec<u8>, hash_function: H) -> Self {
         let bytes = Self::inputs_to_bytes(&transactions, &previous_hash);
         let new_hash = hash_function.compute_hash(&bytes);
 
         Self {
-            transactions,
-            previous_hash,
-            new_hash,
-            hash_function: PhantomData,
+            transactions: transactions,
+            previous_block_hash: previous_hash,
+            this_block_hash: new_hash,
+            hash_function: hash_function,
         }
     }
 
@@ -33,14 +32,26 @@ impl <H: HashFunction, T: Transaction> BasicBlock<'_, H, T> {
         bytes.extend(previous_hash);
         return bytes
     }
+
+    fn has_valid_hash(&self) -> bool {
+        let bytes = Self::inputs_to_bytes(&self.transactions, &self.previous_block_hash);
+        let hash = self.hash_function.compute_hash(&bytes);
+        return hash == self.this_block_hash;
+    }
 }
 
-impl <H: HashFunction, T: Transaction> CryptoBlock for BasicBlock<'_, H, T> {
+impl <H: HashFunction, T: Transaction> CryptoBlock for BasicBlock<H, T> {
     fn verify(&self) -> bool {
-        // TODO
-        // verify all transactions
-        // verify cryptography
-        unimplemented!();
+        let transaction_validity = self.transactions.iter().all(|t| t.verify());
+        return transaction_validity && self.has_valid_hash();
+    }
+
+    fn get_this_block_hash(&self) -> &[u8] {
+        &self.this_block_hash
+    }
+
+    fn get_previous_block_hash(&self) -> &[u8] {
+        &self.previous_block_hash
     }
 }
 

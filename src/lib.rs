@@ -1,2 +1,2 @@
-pub mod chain;
+pub mod blockchain;
 pub mod cryptography;
