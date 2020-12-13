@@ -26,5 +26,6 @@ pub trait UnspentTransactionOutput {
 pub trait Transaction {
     fn verify(&self) -> bool;
     fn as_bytes(&self) -> Vec<u8>;
+    fn get_spent_utxos(&self) -> &Vec<Box<dyn UnspentTransactionOutput>>;
 }
 

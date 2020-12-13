@@ -1,5 +1,5 @@
 use crate::cryptography::HashFunction;
-use crate::blockchain::transaction::Transaction;
+use crate::blockchain::transaction::{Transaction, UnspentTransactionOutput};
 use super::CryptoBlock;
 
 #[derive(Debug)]
@@ -53,18 +53,9 @@ impl <H: HashFunction, T: Transaction> CryptoBlock for BasicBlock<H, T> {
     fn get_previous_block_hash(&self) -> &[u8] {
         &self.previous_block_hash
     }
-}
 
-
-/*#[cfg(test)]
-mod tests {
-    #[test]
-    fn test_inputs_to_bytes() {
-        //TODO
-    }
-
-    #[test]
-    fn test_verify() {
+    fn get_spent_utxos(&self) -> &Vec<Box<dyn UnspentTransactionOutput>> {
         // TODO
+        unimplemented!();
     }
-}*/
+}

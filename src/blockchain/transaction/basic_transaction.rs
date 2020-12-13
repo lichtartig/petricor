@@ -32,38 +32,9 @@ impl <U: UnspentTransactionOutput> Transaction for BasicTransaction<U> {
         bytes.extend(output_transaction_bytes);
         return bytes;
     }
-}
 
-
-#[cfg(test)]
-mod tests {
-    //use super::BasicTransaction;
-    #[test]
-    fn test_byte_conversion() {
-        //TODO
-    }
-
-    #[test]
-    fn test_verify_positive() {
+    fn get_spent_utxos(&self) -> &Vec<Box<dyn UnspentTransactionOutput>> {
         // TODO
-        // test if a single allowed transaction passes verify
-    }
-
-    #[test]
-    fn test_verify_positive_multiple() {
-        // TODO
-        // test if multiple allowed transactions pass verify
-    }
-
-    #[test]
-    fn test_verify_negative() {
-        // TODO
-        // test if a forbidden transactions passes verify
-    }
-
-    #[test]
-    fn test_verify_negative_multiple() {
-        // TODO
-        // test if a mix of allowed and forbidden transactions passes verify
+        unimplemented!();
     }
 }
